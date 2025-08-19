@@ -14,33 +14,17 @@ import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 
-@RestController
-@CrossOrigin(origins = {"http://localhost:5173", AppConstants.FRONT_END_BASE_URL}, allowCredentials = "true")
+@Controller
+@CrossOrigin(AppConstants.FRONT_END_BASE_URL)
 public class ChatController {
-    private RoomService roomService;
+   private RoomService roomService;
 
     public ChatController(RoomService roomService) {
         this.roomService = roomService;
     }
 
-    // REST endpoint for creating room
-    @PostMapping("/api/v1/rooms")
-    public Room createRoom(@RequestBody Room room) {
-        return roomService.saveNewRoomById(room);
-    }
-
-    // REST endpoint for joining room
-    @GetMapping("/api/v1/rooms/{roomId}")
-    public Room joinRoom(@PathVariable String roomId) {
-        return roomService.findByRoomId(roomId);
-    }
-
-    //for sending and receiving messages (WebSocket)
+    //for sending and receiving messages
     @MessageMapping("/sendMessage/{roomId}")
     @SendTo("/topic/room/{roomId}")   //subscribe
     public Message sendMessage(
