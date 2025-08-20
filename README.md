@@ -104,7 +104,7 @@ Create a `.env` file or set these in your deployment platform:
 
 ```properties
 # MongoDB Configuration
-MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/database?retryWrites=true&w=majority
+MONGODB_URI=mongodbu username and password - get it from MongoDB Atlas
 MONGO_DATABASE=your_database_name
 
 # CORS Configuration
