@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.index.Indexed;
 
 @Document(collection = "rooms")
 @AllArgsConstructor
@@ -17,7 +18,10 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Room {
     @Id
     private String id;
+    
+    @Indexed(unique = true)
     private String roomId;
+    
     private List<Message> messages = new ArrayList<>();
 
     public String getId() {

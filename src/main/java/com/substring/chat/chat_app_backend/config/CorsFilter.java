@@ -20,24 +20,29 @@ public class CorsFilter implements Filter {
         HttpServletResponse response = (HttpServletResponse) res;
         HttpServletRequest request = (HttpServletRequest) req;
         
-        response.setHeader("Access-Control-Allow-Origin", AppConstants.FRONT_END_BASE_URL);
-        response.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-        response.setHeader("Access-Control-Allow-Headers", "*");
+        // Set CORS headers
+        response.setHeader("Access-Control-Allow-Origin", "https://chat-app-frontend-fgtp.vercel.app");
         response.setHeader("Access-Control-Allow-Credentials", "true");
+        response.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
         response.setHeader("Access-Control-Max-Age", "3600");
+        response.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
         
+        // Handle preflight requests
         if ("OPTIONS".equalsIgnoreCase(request.getMethod())) {
             response.setStatus(HttpServletResponse.SC_OK);
-        } else {
-            chain.doFilter(req, res);
+            return;
         }
+        
+        chain.doFilter(req, res);
     }
 
     @Override
     public void init(FilterConfig filterConfig) {
+        // No initialization needed
     }
 
     @Override
     public void destroy() {
+        // No cleanup needed
     }
 }
